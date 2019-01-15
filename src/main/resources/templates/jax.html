@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>JAX</title>
+</head>
+<body>
+<div>
+    <input type="text" id="name" placeholder="name">
+    <input type="text" id="surname" placeholder="surname">
+    <input type="text" id="email" placeholder="email">
+    <input type="button" value="add" id="add">
+</div>
+<div id="rep">
+
+</div>
+
+
+<script>
+    $('#add').click(function () {
+        $('#rep').empty();
+        let $name = $('#name').val();
+        let $surname = $('#surname').val();
+        let $email = $('#email').val();
+        let $user = {name: $name, surname: $surname, email: $email};
+
+        $.ajax({
+            url: "/add",
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify($user),
+            cache: false,
+
+            success: function (re) {
+                for (const reElement of re) {
+                    let $div = $('<div/>',
+                        {
+                            text: reElement.id + ' ' +
+                                reElement.name + ' ' +
+                                reElement.surname + ' ' +
+                                reElement.email
+                        });
+                    $('#rep').append($div)
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    })
+
+</script>
+</body>
+</html>

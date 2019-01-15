@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>AJAX</title>
+</head>
+<body>
+
+
+<form id="form">
+    <input type="text" name="catname" placeholder="cat name">
+    <input type="file" name="catimg">
+    <button id="addcat">Add cat</button>
+</form>
+
+
+<script>
+    $('#addcat').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "/addcat",
+            type: "POST",
+            data: new FormData($("#form")[0]),
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function () {
+                console.log('Save')
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    })
+</script>
+</body>
+</html>
